@@ -13,10 +13,10 @@ def create_source_researcher():
             "support the research findings."
         ),
         backstory=(
-            "You are a source research specialist who focuses on "
-            "finding useful and credible sources. You carefully "
-            "look for reports, articles, studies, and other "
-            "relevant sources that can support a research project."
+            "You are a source research specialist. Use the "
+            "research findings available in your task context to "
+            "identify and organize the most relevant sources. "
+            "Do not invent sources."
         ),
         llm=get_llm(),
         verbose=True
