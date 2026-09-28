@@ -5,14 +5,14 @@ def create_source_task(agent):
 
     return Task(
         description=(
-            "Find reliable and relevant sources for the research topic. "
-            "Use the web research tool to identify useful articles, "
-            "reports, studies, websites, and other credible sources. "
-            "Explain what information each source supports."
+            "Use the direct web research findings provided below. "
+            "Identify only the most relevant and credible sources already "
+            "present in that material. Do not invent sources and do not "
+            "perform another web search."
         ),
         expected_output=(
-            "A list of relevant sources with a short explanation "
-            "of the information or claims supported by each source."
+            "A concise source list containing no more than 5 sources, "
+            "with one short sentence explaining what each source supports."
         ),
         agent=agent
     )
