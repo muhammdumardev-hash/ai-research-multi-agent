@@ -5,15 +5,13 @@ def create_analysis_task(agent):
 
     return Task(
         description=(
-            "Analyze the verified research findings and fact-checking "
-            "results. Identify important patterns, trends, "
-            "relationships, comparisons, implications, and "
-            "meaningful insights. Base the analysis only on the "
-            "information provided by the previous research stages."
+            "Analyze the research and fact-checking results provided by "
+            "the previous stages. Focus on the most important patterns, "
+            "comparisons, trends, implications, and evidence-based insights. "
+            "Do not repeat the research."
         ),
         expected_output=(
-            "A structured analysis containing key patterns, trends, "
-            "comparisons, implications, and evidence-based insights."
+            "A concise analysis with 5-7 key insights and short explanations."
         ),
         agent=agent
     )
