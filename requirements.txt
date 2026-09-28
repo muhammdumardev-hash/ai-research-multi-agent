@@ -1,3 +1,5 @@
 streamlit
+crewai
 crewai[litellm]
 groq
+litellm>=1.76.0
