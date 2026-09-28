@@ -5,16 +5,15 @@ def create_fact_check_task(agent):
 
     return Task(
         description=(
-            "Review the research findings and source information. "
-            "Use the web research tool to independently verify "
-            "important claims. Identify supported claims, "
-            "unsupported claims, conflicting information, and "
-            "information that requires further verification."
+            "Review the research summary and source list provided by the "
+            "previous stages. Check claims for consistency with the "
+            "provided evidence. Do not perform another web search and do "
+            "not invent evidence."
         ),
         expected_output=(
-            "A fact-checking report that clearly identifies "
-            "verified information, questionable claims, "
-            "conflicting evidence, and areas of uncertainty."
+            "A concise fact-check report listing verified claims, "
+            "questionable claims, and important uncertainties. "
+            "Use short bullet points."
         ),
         agent=agent
     )
