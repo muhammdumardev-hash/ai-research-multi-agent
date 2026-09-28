@@ -18,8 +18,8 @@ from tools.research_tools import research_search_tool
 def create_research_crew(topic):
 
     # Perform web research directly through the Groq API.
-    # This keeps Groq's built-in browser search outside
-    # CrewAI/LiteLLM tool calling.
+    # Keep the search result short so it does not become a large
+    # repeated context for every CrewAI agent.
     web_research = research_search_tool._run(topic)
 
     # Create agents
@@ -36,7 +36,7 @@ def create_research_crew(topic):
     analysis_task = create_analysis_task(analyst)
     writing_task = create_writing_task(writer)
 
-    # Give the first two agents the direct web research result.
+    # Give only the compact direct web research to the first two agents.
     research_task.description += (
         f"\n\nResearch topic: {topic}"
         f"\n\nDirect web research findings:\n{web_research}"
@@ -47,7 +47,8 @@ def create_research_crew(topic):
         f"\n\nDirect web research findings:\n{web_research}"
     )
 
-    # Pass previous task results to the next tasks
+    # Keep downstream contexts compact and avoid repeatedly passing
+    # every previous output to every later agent.
     fact_check_task.context = [
         research_task,
         source_task
@@ -55,12 +56,10 @@ def create_research_crew(topic):
 
     analysis_task.context = [
         research_task,
-        source_task,
         fact_check_task
     ]
 
     writing_task.context = [
-        research_task,
         source_task,
         fact_check_task,
         analysis_task
