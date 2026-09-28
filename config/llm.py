@@ -15,5 +15,6 @@ def get_llm():
     return LLM(
         model=f"groq/{groq_model}",
         api_key=groq_api_key,
-        reasoning_effort="low"
+        reasoning_effort="low",
+        max_tokens=450
     )
