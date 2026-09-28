@@ -1,16 +1,19 @@
-import os
-
+import streamlit as st
 from crewai import LLM
+
+# Workaround for CrewAI cache_breakpoint bug with Groq/LiteLLM
+import crewai.llms.cache as crewai_cache
+
+crewai_cache.mark_cache_breakpoint = lambda msg: msg
 
 
 def get_llm():
-    groq_api_key = os.getenv("GROQ_API_KEY")
 
-    if not groq_api_key:
-        raise ValueError("GROQ_API_KEY is not configured.")
+    groq_api_key = st.secrets["GROQ_API_KEY"]
+    groq_model = st.secrets["GROQ_MODEL"]
 
     return LLM(
-        model="groq/openai/gpt-oss-120b",
+        model=f"groq/{groq_model}",
         api_key=groq_api_key,
         reasoning_effort="low"
     )
