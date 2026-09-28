@@ -5,15 +5,14 @@ def create_writing_task(agent):
 
     return Task(
         description=(
-            "Create the final research report using the research "
-            "findings, sources, fact-checking results, and analysis "
-            "provided by the research team. Organize the report "
-            "clearly and professionally. Do not invent information."
+            "Write the final research report using the provided analysis, "
+            "fact-checking results, and source list. Be clear and professional. "
+            "Do not repeat large blocks of earlier research and do not invent facts."
         ),
         expected_output=(
-            "A professional research report with a clear title, "
-            "introduction, main findings, analysis, conclusion, "
-            "and relevant sources."
+            "A concise professional report with a title, brief introduction, "
+            "key findings, analysis, conclusion, and sources. Keep it focused "
+            "and avoid unnecessary repetition."
         ),
         agent=agent
     )
