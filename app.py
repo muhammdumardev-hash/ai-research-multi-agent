@@ -66,9 +66,14 @@ h1, h2, h3, h4 { font-family: 'Sora', sans-serif; letter-spacing: -0.02em; color
 }
 
 /* ---- pipeline steps */
-.pipeline { display: flex; gap: .8rem; flex-wrap: wrap; margin: 0 0 1.6rem 0; }
+.pipeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .8rem;
+    margin: 0 0 1.6rem 0;
+}
+@media (max-width: 900px) { .pipeline { grid-template-columns: repeat(2, 1fr); } }
 .step {
-    flex: 1 1 200px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 14px;
@@ -144,6 +149,25 @@ section[data-testid="stSidebar"] { background: var(--surface); border-right: 1px
 
 /* ---- tabs */
 button[data-baseweb="tab"] { font-weight: 600; }
+
+/* ---- force a readable light look even when Streamlit/browser theme is dark */
+.stApp, section[data-testid="stSidebar"] { color-scheme: light; background-color: var(--bg); }
+section[data-testid="stSidebar"] { background-color: var(--surface) !important; }
+.stApp p, .stApp label, .stApp li, .stApp span, .stApp h1, .stApp h2,
+.stApp h3, .stApp h4, .stApp div[data-testid="stMarkdownContainer"],
+section[data-testid="stSidebar"] * { color: var(--ink); }
+.stApp [data-testid="stCaptionContainer"],
+.stApp [data-testid="stCaptionContainer"] *,
+.stApp .step .desc, .stApp .stat .label { color: var(--muted) !important; }
+.stApp .hero h1 { color: #fff !important; }
+.stApp .hero p { color: #C7D0F0 !important; }
+.stApp .stButton > button[kind="primary"],
+.stApp .stButton > button[kind="primary"] * { color: #fff !important; }
+.stApp .stButton > button:not([kind="primary"]) { background: var(--surface); }
+.stApp div[data-testid="stTextInput"] input,
+.stApp textarea { background: var(--surface) !important; color: var(--ink) !important; }
+.stApp div[data-testid="stExpander"], .stApp details { background: var(--surface); border-color: var(--line); }
+.stApp div[data-testid="stVerticalBlockBorderWrapper"] { background: var(--surface); }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
