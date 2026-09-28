@@ -7,9 +7,8 @@ class ResearchSearchTool(BaseTool):
     name: str = "Web Research Tool"
 
     description: str = (
-        "Search the web for information about the research topic. "
-        "Use this tool to find facts, studies, reports, articles, "
-        "and other relevant information."
+        "Search the web for concise factual research findings and "
+        "relevant sources."
     )
 
     def _run(self, query: str) -> str:
@@ -25,9 +24,10 @@ class ResearchSearchTool(BaseTool):
                 {
                     "role": "user",
                     "content": (
-                        "Search the web and research this topic. "
-                        "Provide concise factual findings and "
-                        "mention the sources.\n\n"
+                        "Research this topic using web search. Return only "
+                        "the most important factual findings and up to 5 "
+                        "relevant sources. Keep the response concise. "
+                        "Do not write a long report.\n\n"
                         f"Topic: {query}"
                     ),
                 }
@@ -41,10 +41,10 @@ class ResearchSearchTool(BaseTool):
 
             tool_choice="required",
             reasoning_effort="low",
-            max_completion_tokens=1024,
+            max_completion_tokens=512,
         )
 
-        return response.choices[0].message.content
+        return response.choices[0].message.content or ""
 
 
 research_search_tool = ResearchSearchTool()
