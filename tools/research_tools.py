@@ -1,5 +1,6 @@
 import streamlit as st
-from groq import Groq
+from google import genai
+from google.genai import types
 from crewai.tools import BaseTool
 
 
@@ -13,38 +14,31 @@ class ResearchSearchTool(BaseTool):
 
     def _run(self, query: str) -> str:
 
-        client = Groq(
-            api_key=st.secrets["GROQ_API_KEY"]
+        client = genai.Client(
+            api_key=st.secrets["GEMINI_API_KEY"]
         )
 
-        response = client.chat.completions.create(
-            model="openai/gpt-oss-120b",
-
-            messages=[
-                {
-                    "role": "user",
-                    "content": (
-                        "Research this topic using web search. Return only "
-                        "the most important factual findings and up to 5 "
-                        "relevant sources. Keep the response concise. "
-                        "Do not write a long report.\n\n"
-                        f"Topic: {query}"
-                    ),
-                }
-            ],
-
-            tools=[
-                {
-                    "type": "browser_search"
-                }
-            ],
-
-            tool_choice="required",
-            reasoning_effort="low",
-            max_completion_tokens=512,
+        grounding_tool = types.Tool(
+            google_search=types.GoogleSearch()
         )
 
-        return response.choices[0].message.content or ""
+        config = types.GenerateContentConfig(
+            tools=[grounding_tool]
+        )
+
+        response = client.models.generate_content(
+            model=st.secrets["GEMINI_MODEL"],
+            contents=(
+                "Research this topic using Google Search. Return only "
+                "the most important factual findings and up to 5 "
+                "relevant sources. Keep the response concise. "
+                "Do not write a long report.\n\n"
+                f"Topic: {query}"
+            ),
+            config=config
+        )
+
+        return response.text or ""
 
 
 research_search_tool = ResearchSearchTool()
