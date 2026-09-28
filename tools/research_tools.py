@@ -1,4 +1,4 @@
-import os
+import streamlit as st
 
 from groq import Groq
 from crewai.tools import BaseTool
@@ -15,10 +15,7 @@ class ResearchSearchTool(BaseTool):
 
     def _run(self, query: str) -> str:
 
-        api_key = os.getenv("GROQ_API_KEY")
-
-        if not api_key:
-            return "Error: GROQ_API_KEY is not configured."
+        api_key = st.secrets["GROQ_API_KEY"]
 
         client = Groq(api_key=api_key)
 
@@ -42,7 +39,7 @@ class ResearchSearchTool(BaseTool):
             ],
             tool_choice="required",
             reasoning_effort="low",
-            max_completion_tokens=3000,
+            max_completion_tokens=2048,
         )
 
         return response.choices[0].message.content
