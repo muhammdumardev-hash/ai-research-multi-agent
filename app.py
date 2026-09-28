@@ -84,16 +84,32 @@ h1, h2, h3, h4 { font-family: 'Sora', sans-serif; letter-spacing: -0.02em; color
 .step .desc { color: var(--muted); font-size: .88rem; margin-top: .15rem; }
 
 /* ---- input */
+div[data-testid="stTextInput"] div[data-baseweb="input"],
+div[data-testid="stTextInput"] div[data-baseweb="base-input"] {
+    background: #FFFFFF !important;
+    border-radius: 12px !important;
+}
+div[data-testid="stTextInput"] div[data-baseweb="input"] {
+    border: 1.5px solid var(--line) !important;
+}
+div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
 div[data-testid="stTextInput"] input {
-    background: var(--surface);
-    border: 1.5px solid var(--line);
-    border-radius: 12px;
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    caret-color: #000000;
+    border: none !important;
+    box-shadow: none !important;
     padding: .85rem 1rem;
     font-size: 1.02rem;
 }
-div[data-testid="stTextInput"] input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-soft);
+div[data-testid="stTextInput"] input::placeholder {
+    color: #667085 !important;
+    -webkit-text-fill-color: #667085 !important;
+    opacity: 1 !important;
 }
 
 /* ---- buttons */
@@ -230,8 +246,8 @@ with st.sidebar:
 st.markdown(
     """
 <div class="hero">
-    <h1>Turn any topic into a<br>verified research report.</h1>
-    <p>Type a topic and a team of AI agents will gather sources, check the facts,
+    <h1 style="color:#FFFFFF !important; -webkit-text-fill-color:#FFFFFF;">Turn any topic into a<br>verified research report.</h1>
+    <p style="color:#C7D0F0 !important; -webkit-text-fill-color:#C7D0F0;">Type a topic and a team of AI agents will gather sources, check the facts,
     analyze the findings and write the final report for you.</p>
 </div>
 """,
