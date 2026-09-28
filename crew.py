@@ -12,8 +12,15 @@ from tasks.fact_check_task import create_fact_check_task
 from tasks.analysis_task import create_analysis_task
 from tasks.writing_task import create_writing_task
 
+from tools.research_tools import research_search_tool
+
 
 def create_research_crew(topic):
+
+    # Perform web research directly through the Groq API.
+    # This keeps Groq's built-in browser search outside
+    # CrewAI/LiteLLM tool calling.
+    web_research = research_search_tool._run(topic)
 
     # Create agents
     researcher = create_researcher()
@@ -25,14 +32,20 @@ def create_research_crew(topic):
     # Create tasks
     research_task = create_research_task(researcher)
     source_task = create_source_task(source_researcher)
-
     fact_check_task = create_fact_check_task(fact_checker)
     analysis_task = create_analysis_task(analyst)
     writing_task = create_writing_task(writer)
 
-    # Add the research topic
-    research_task.description += f"\n\nResearch topic: {topic}"
-    source_task.description += f"\n\nResearch topic: {topic}"
+    # Give the first two agents the direct web research result.
+    research_task.description += (
+        f"\n\nResearch topic: {topic}"
+        f"\n\nDirect web research findings:\n{web_research}"
+    )
+
+    source_task.description += (
+        f"\n\nResearch topic: {topic}"
+        f"\n\nDirect web research findings:\n{web_research}"
+    )
 
     # Pass previous task results to the next tasks
     fact_check_task.context = [
@@ -53,7 +66,6 @@ def create_research_crew(topic):
         analysis_task
     ]
 
-    # Create Crew
     crew = Crew(
         agents=[
             researcher,
