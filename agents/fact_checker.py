@@ -1,7 +1,6 @@
 from crewai import Agent
 
 from config.llm import get_llm
-from tools.research_tools import research_search_tool
 
 
 def create_fact_checker():
@@ -14,13 +13,11 @@ def create_fact_checker():
             "uncertain information."
         ),
         backstory=(
-            "You are a careful fact checker. You examine research "
-            "findings critically, compare claims with available "
-            "evidence, and use reliable online sources when needed "
-            "to verify important claims."
+            "You are a careful fact checker. Examine the research "
+            "findings and source information provided in your task "
+            "context. Do not invent web sources or facts."
         ),
         llm=get_llm(),
-        tools=[research_search_tool],
         verbose=True
     )
 
